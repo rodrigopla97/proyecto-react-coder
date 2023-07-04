@@ -1,23 +1,14 @@
-import logo from './logo.svg';
+import 'core-js';
 import './App.css';
+import 'tailwindcss/tailwind.css';
+import Navbar from './Components/NavBar';
+import ItemListContainer from './Components/ListContainer';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="appcontainer mx-auto py-8">
+      <Navbar />
+      <ItemListContainer />
     </div>
   );
 }
