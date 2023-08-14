@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const ItemDetailContainer = ({ load }) => {
+const ItemDetailContainer = ({ load, count }) => {
   const [item, setItem] = useState(null);
 
   const loading = load;
