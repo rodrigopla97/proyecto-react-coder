@@ -1,15 +1,14 @@
 import React from "react";
+import { CartItem } from "../entities/entities";
 
-const CartPage = ({
-  cartItems,
-  increaseQuantity,
-  decreaseQuantity,
-  removeFromCart,
-}) => {
-  const setQuantity = (quantity) => {
-    return quantity;
-  };
+type CartPageProps = {
+  cartItems: CartItem[];
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
+  removeFromCart: (id: number) => void;
+};
 
+const CartPage = ({ cartItems, increaseQuantity, decreaseQuantity, removeFromCart }: CartPageProps) => {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Carrito de Compras</h2>
@@ -25,9 +24,6 @@ const CartPage = ({
                 >
                   -
                 </button>
-                <span className="mx-2 hidden">
-                  {setQuantity(item.quantity)}
-                </span>
                 <button
                   className="bg-blue-500 text-white py-1 px-2 rounded-lg mr-2"
                   onClick={() => increaseQuantity(item.id)}

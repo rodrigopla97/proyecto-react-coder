@@ -1,6 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-const ItemListModal = ({ children, onClose }) => {
+type ItemListModalProps = {
+  children: ReactNode;
+  onClose: () => void;
+};
+
+const ItemListModal = ({ children, onClose }: ItemListModalProps) => {
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
       <div className="bg-gray border-solid border-gray-dark border p-4 rounded-lg">

@@ -6,51 +6,40 @@ import ItemListContainer from "./Components/ListContainer";
 import CartModal from "./Components/CartModal";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CartPage from "./Components/CartPage";
+import { CartItem } from "./entities/entities";
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartModalOpen, setCartModalOpen] = useState(false);
 
-  const addToCart = (item, quantity) => {
+  const addToCart = (item: Omit<CartItem, "quantity">, quantity: number) => {
     if (quantity > 0) {
-      const newItem = { ...item, quantity };
+      const newItem: CartItem = { ...item, quantity };
       setCartItems([...cartItems, newItem]);
     }
   };
 
-  const openCartModal = () => {
-    setCartModalOpen(true);
-  };
+  const openCartModal = () => setCartModalOpen(true);
+  const closeCartModal = () => setCartModalOpen(false);
 
-  const closeCartModal = () => {
-    setCartModalOpen(false);
-  };
-
-  const increaseQuantity = (productId) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.map((item) => {
-        if (item.id === productId) {
-          return { ...item, quantity: item.quantity + 1 };
-        }
-        return item;
-      })
-    );
-  };
-  const decreaseQuantity = (productId) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.map((item) => {
-        if (item.id === productId) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
-        return item;
-      })
+  const increaseQuantity = (productId: number) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+      )
     );
   };
 
-  const removeFromCart = (productId) => {
-    setCartItems((prevCartItems) =>
-      prevCartItems.filter((item) => item.id !== productId)
+  const decreaseQuantity = (productId: number) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+      )
     );
+  };
+
+  const removeFromCart = (productId: number) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== productId));
   };
 
   return (
@@ -58,17 +47,14 @@ function App() {
       <Router>
         <Navbar cartItems={cartItems} openCartModal={openCartModal} />
         <Routes>
-          <Route
-            path="/"
-            element={<ItemListContainer addToCart={addToCart} />}
-          />
+          <Route path="/" element={<ItemListContainer addToCart={addToCart} />} />
           <Route
             path="/destacado"
             element={
               <ItemListContainer
                 addToCart={addToCart}
-                namePath={"destacado"}
-                titlePath={"Mirá nuestros productos electrónicos"}
+                namePath="destacado"
+                titlePath="Mirá nuestros productos electrónicos"
               />
             }
           />
@@ -77,8 +63,8 @@ function App() {
             element={
               <ItemListContainer
                 addToCart={addToCart}
-                namePath={"oferta"}
-                titlePath={"Aprovecha nuestros productos en liquidación"}
+                namePath="oferta"
+                titlePath="Aprovecha nuestros productos en liquidación"
               />
             }
           />
@@ -90,7 +76,8 @@ function App() {
                 increaseQuantity={increaseQuantity}
                 decreaseQuantity={decreaseQuantity}
                 removeFromCart={removeFromCart}
-              />}
+              />
+            }
           />
         </Routes>
       </Router>

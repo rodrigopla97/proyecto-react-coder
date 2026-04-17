@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
 import CardContainer from "./cardContainer";
 
-const ItemListContainer = (props) => {
-  const [listApi, setListApi] = useState([]);
+export type Product = {
+  id: number;
+  name: string;
+  image: string;
+  status: string;
+  gender: string;
+  species: string;
+};
 
-  const pathProp = props.namePath;
-  const titlePath = props.titlePath;
-  const addToCart = props.addToCart;
+type ItemListContainerProps = {
+  addToCart: (item: Product, quantity: number) => void;
+  namePath?: string;
+  titlePath?: string;
+};
 
-  // useEffect(() => {
-  //   fetch("https://fakestoreapi.com/products/")
-  //     .then((res) => res.json())
-  //     .then((json) => setListApi(json));
-  // }, []);
+const ItemListContainer = ({ addToCart, namePath, titlePath }: ItemListContainerProps) => {
+  const [listApi, setListApi] = useState<Product[]>([]);
+
   useEffect(() => {
     fetch("https://rickandmortyapi.com/api/character")
       .then((res) => res.json())
       .then((json) => setListApi(json.results));
   }, []);
-
-  console.log("listApi ->", listApi);
 
   return (
     <>
@@ -28,7 +32,7 @@ const ItemListContainer = (props) => {
       </div>
       <CardContainer
         product={listApi}
-        pathProp={pathProp}
+        pathProp={namePath}
         addToCart={addToCart}
       />
     </>

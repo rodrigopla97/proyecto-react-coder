@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
 
-const ItemDetailContainer = ({ load, count }) => {
-  const [item, setItem] = useState(null);
+type ItemDetailContainerProps = {
+  load: boolean;
+  count?: number;
+};
 
-  const loading = load;
+type MockItem = {
+  id: number;
+  name: string;
+  description: string;
+};
+
+const ItemDetailContainer = ({ load }: ItemDetailContainerProps) => {
+  const [item, setItem] = useState<MockItem | null>(null);
 
   useEffect(() => {
-    const fetchItem = () => {
+    const fetchItem = (): Promise<MockItem> => {
       return new Promise((resolve) => {
         setTimeout(() => {
-          const detailMockItem = {
+          resolve({
             id: 1,
             name: "Nombre del item que se muestra",
             description:
               "Esto es una descripcion en la que iría el detalle del producto seleccionado. Se seguirá trabajando en avanzarlo. (⌐■_■)",
-          };
-          resolve(detailMockItem);
+          });
         }, 2000);
       });
     };
@@ -25,7 +33,7 @@ const ItemDetailContainer = ({ load, count }) => {
 
   return (
     <div>
-      {item && !loading ? (
+      {item && !load ? (
         <>
           <h2>{item.name}</h2>
           <p>{item.description}</p>

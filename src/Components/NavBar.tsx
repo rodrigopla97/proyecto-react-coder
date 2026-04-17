@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CartItem } from "../entities/entities";
 
-const Navbar = ({ cartItems, openCartModal }) => {
+type NavBarProps = {
+  cartItems: CartItem[];
+  openCartModal: () => void;
+};
+
+const Navbar = ({ cartItems, openCartModal }: NavBarProps) => {
   const totalItemsInCart = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
