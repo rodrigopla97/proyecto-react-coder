@@ -1,22 +1,8 @@
-import React, { useEffect, useState } from "react";
-import CardContainer from "./cardContainer";
+import { useEffect, useState } from "react";
+import { CardContainer } from "./cardContainer";
+import { Product, ItemListContainerProps } from "../entities/entities";
 
-export type Product = {
-  id: number;
-  name: string;
-  image: string;
-  status: string;
-  gender: string;
-  species: string;
-};
-
-type ItemListContainerProps = {
-  addToCart: (item: Product, quantity: number) => void;
-  namePath?: string;
-  titlePath?: string;
-};
-
-const ItemListContainer = ({ addToCart, namePath, titlePath }: ItemListContainerProps) => {
+export function ItemListContainer({ namePath, titlePath }: ItemListContainerProps) {
   const [listApi, setListApi] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -30,13 +16,7 @@ const ItemListContainer = ({ addToCart, namePath, titlePath }: ItemListContainer
       <div className="item-list-container text-center my-8">
         <h2>{titlePath}</h2>
       </div>
-      <CardContainer
-        product={listApi}
-        pathProp={namePath}
-        addToCart={addToCart}
-      />
+      <CardContainer product={listApi} pathProp={namePath} />
     </>
   );
-};
-
-export default ItemListContainer;
+}

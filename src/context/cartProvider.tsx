@@ -3,7 +3,7 @@ import { CartContext } from "./CartContext";
 import { CartContextType, CartPageStateType, ProviderProps } from "../entities/entities";
 import { INITIAL_STATE } from "../constants/constants";
 
-export default function CartProvider({ children }: ProviderProps) {
+export function CartProvider({ children }: ProviderProps) {
   const [getCartPageState, setCartPageState] = useState<CartPageStateType>(INITIAL_STATE);
 
   return (

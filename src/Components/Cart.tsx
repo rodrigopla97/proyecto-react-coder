@@ -1,15 +1,13 @@
-import React from "react";
-import { CartItem } from "../entities/entities";
+import { useCart } from "../context/cartProvider";
 
-type CartProps = {
-  cartItems: CartItem[];
-};
+export function Cart() {
+  const { getCartPageState } = useCart();
+  const { items } = getCartPageState;
 
-const Cart = ({ cartItems }: CartProps) => {
   return (
     <div>
       <h2>Carrito de Compras</h2>
-      {cartItems.map((item, index) => (
+      {items.map((item, index) => (
         <div key={index}>
           <p>
             {item.name} - Cantidad: {item.quantity}
@@ -18,6 +16,4 @@ const Cart = ({ cartItems }: CartProps) => {
       ))}
     </div>
   );
-};
-
-export default Cart;
+}

@@ -1,25 +1,16 @@
-import React from "react";
-import CardItem from "./CardItem";
-import { Product } from "./ListContainer";
+import { CardItem } from "./CardItem";
+import { CardContainerProps } from "../entities/entities";
 
-type CardContainerProps = {
-  product: Product[];
-  pathProp?: string;
-  addToCart: (item: Product, quantity: number) => void;
-};
-
-const CardContainer = ({ product, pathProp, addToCart }: CardContainerProps) => {
+export function CardContainer({ product, pathProp }: CardContainerProps) {
   return (
     <div className="flex justify-center flex-wrap mx-4">
       {product.map((item) =>
         (pathProp === "destacado" && item.gender === "Male") ||
         (pathProp === "oferta" && item.status === "Dead") ||
-        (!pathProp) ? (
-          <CardItem key={item.id} product={item} addToCart={addToCart} />
+        !pathProp ? (
+          <CardItem key={item.id} product={item} />
         ) : null
       )}
     </div>
   );
-};
-
-export default CardContainer;
+}

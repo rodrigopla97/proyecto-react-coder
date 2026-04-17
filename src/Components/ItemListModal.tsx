@@ -1,24 +1,19 @@
-import React, { ReactNode } from "react";
+import { ItemListModalProps } from "../entities/entities";
 
-type ItemListModalProps = {
-  children: ReactNode;
-  onClose: () => void;
-};
-
-const ItemListModal = ({ children, onClose }: ItemListModalProps) => {
+export function ItemListModal({ children, onClose, loading }: ItemListModalProps) {
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
-      <div className="bg-gray border-solid border-gray-dark border p-4 rounded-lg">
+      <div className="bg-gray border-solid border-gray-dark border p-6 rounded-lg w-80">
         {children}
-        <button
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4"
-          onClick={onClose}
-        >
-          Cerrar
-        </button>
+        {!loading && (
+          <button
+            className="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4"
+            onClick={onClose}
+          >
+            Cerrar
+          </button>
+        )}
       </div>
     </div>
   );
-};
-
-export default ItemListModal;
+}

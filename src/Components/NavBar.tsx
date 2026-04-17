@@ -1,17 +1,16 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { CartItem } from "../entities/entities";
+import { useCart } from "../context/cartProvider";
 
-type NavBarProps = {
-  cartItems: CartItem[];
-  openCartModal: () => void;
-};
-
-const Navbar = ({ cartItems, openCartModal }: NavBarProps) => {
-  const totalItemsInCart = cartItems.reduce(
+export function Navbar() {
+  const { getCartPageState, setCartPageState } = useCart();
+  const totalItemsInCart = getCartPageState.items.reduce(
     (total, item) => total + item.quantity,
     0
   );
+
+  function openCartModal() {
+    setCartPageState((state) => ({ ...state, isModalOpen: true }));
+  }
 
   return (
     <div className="bg-gray">
@@ -69,6 +68,4 @@ const Navbar = ({ cartItems, openCartModal }: NavBarProps) => {
       </nav>
     </div>
   );
-};
-
-export default Navbar;
+}

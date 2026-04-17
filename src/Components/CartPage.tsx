@@ -1,19 +1,39 @@
-import React from "react";
-import { CartItem } from "../entities/entities";
+import { useCart } from "../context/cartProvider";
 
-type CartPageProps = {
-  cartItems: CartItem[];
-  increaseQuantity: (id: number) => void;
-  decreaseQuantity: (id: number) => void;
-  removeFromCart: (id: number) => void;
-};
+export function CartPage() {
+  const { getCartPageState, setCartPageState } = useCart();
+  const { items } = getCartPageState;
 
-const CartPage = ({ cartItems, increaseQuantity, decreaseQuantity, removeFromCart }: CartPageProps) => {
+  function increaseQuantity(id: number) {
+    setCartPageState((state) => ({
+      ...state,
+      items: state.items.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      ),
+    }));
+  }
+
+  function decreaseQuantity(id: number) {
+    setCartPageState((state) => ({
+      ...state,
+      items: state.items
+        .map((item) => item.id === id ? { ...item, quantity: item.quantity - 1 } : item)
+        .filter((item) => item.quantity > 0),
+    }));
+  }
+
+  function removeFromCart(id: number) {
+    setCartPageState((state) => ({
+      ...state,
+      items: state.items.filter((item) => item.id !== id),
+    }));
+  }
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Carrito de Compras</h2>
       <ul>
-        {cartItems.map((item) => (
+        {items.map((item) => (
           <li key={item.id} className="mb-4">
             <div className="flex items-center justify-between">
               <span>{`${item.name} x ${item.quantity}`}</span>
@@ -43,6 +63,4 @@ const CartPage = ({ cartItems, increaseQuantity, decreaseQuantity, removeFromCar
       </ul>
     </div>
   );
-};
-
-export default CartPage;
+}

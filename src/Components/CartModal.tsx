@@ -1,19 +1,22 @@
-import React from "react";
-import { CartItem } from "../entities/entities";
+import { useCart } from "../context/cartProvider";
 
-type CartModalProps = {
-  cartItems: CartItem[];
-  onClose: () => void;
-};
+export function CartModal() {
+  const { getCartPageState, setCartPageState } = useCart();
+  const { items, isModalOpen } = getCartPageState;
 
-const CartModal = ({ cartItems, onClose }: CartModalProps) => {
+  if (!isModalOpen) return null;
+
+  function onClose() {
+    setCartPageState((state) => ({ ...state, isModalOpen: false }));
+  }
+
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
       <div className="bg-gray border-solid border-gray-dark border p-4 rounded-lg">
         <h2>Carrito de Compras</h2>
-        {cartItems.length === 0 && <p>Carrito Vacio</p>}
+        {items.length === 0 && <p>Carrito Vacio</p>}
         <ul>
-          {cartItems.map((item) => (
+          {items.map((item) => (
             <li key={item.id}>
               {item.name} - Cantidad: {item.quantity}
             </li>
@@ -28,6 +31,4 @@ const CartModal = ({ cartItems, onClose }: CartModalProps) => {
       </div>
     </div>
   );
-};
-
-export default CartModal;
+}
